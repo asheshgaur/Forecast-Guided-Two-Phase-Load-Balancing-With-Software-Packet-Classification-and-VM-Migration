@@ -1,0 +1,51 @@
+FIXED-NETWORK VM-DENSITY STUDY (specified before running results)
+
+Question: How do VM-only and Two-phase perform as more active VMs occupy the
+same physical network? This is a VM-density/load study, not a topology-size
+study and not a claim about packet-classifier processing throughput.
+
+Grid: 16, 24, 32, 40, 48, 56, 64 VMs; 16 hosts; k=4 Fat Tree; 20 switches;
+48 full-duplex 10-Gbps links. Three methods: ECMP, VM-only, Two-phase. Five
+paired seeds: 7, 11, 19, 23, 31. All 105 episodes have 96 15-minute epochs.
+
+Nested workloads: preserve the original 16-VM, eight-class Mixed case exactly.
+Append disjoint source/destination pairs in independently seeded 16-VM cohorts
+with the same per-flow demand distribution. Every additional eight VMs add
+two elephant and two mouse classes. The cohort host-index permutations are
+XOR 0, 1, 8, 9: swap sibling hosts and/or rotate endpoints by two pods. Larger
+populations retain every smaller population's placement and demand trace.
+This is a controlled synthetic placement family, not random VM placement or
+randomized ECMP. Both demand and class count increase; changes cannot be
+attributed to VM count independently of traffic load.
+
+Each VM keeps CPU=0.18 and memory=4 GB; per-host caps remain 0.85 CPU and
+0.85*32 GB. Four VMs fit; five do not. At 64 VMs all hosts hold four, and no
+single-VM migration is feasible. Do not add swaps, lower VM CPU demand, or
+relax constraints to improve this endpoint's results.
+
+Use the unchanged TwoPhaseController and original objective, candidate-VM
+limit (two), destination enumeration, 60-second copying, 8-KiB rule-memory
+budget, and migration eligibility (one VM every eighth epoch). One-step LSTM
+forecast horizon, 12-sample history. Same one-layer 16-unit architecture and
+60 training epochs; train targets <256, validation 256..319, test 320..415.
+For each density and seed, train one shared model over its available flows;
+all methods receive identical forecasts. Reuse verified saved predictions
+for 16 VMs to test exact replication of prior outcomes. Larger densities have
+more training examples; report forecast MAE and training time accordingly.
+
+Gurobi: one thread, seed=0, time limit=10 s per solve, target relative gap=0.001.
+Run cases sequentially so measured decision times do not compete with another
+study worker. Include build time in decision latency; separate training time.
+If no feasible incumbent is returned, retain incumbent placement/routing and
+record the failure explicitly. Retain time-limit statuses/gaps and unfavorable
+outcomes. Do not tune the grid, forecast, or controller after inspecting results.
+
+Report five-seed means and paired 95% Student-t confidence intervals for
+percentage reduction in excess relative to same-seed ECMP and VM-only. Also
+record raw excess and its access/fabric parts, offered Gbps, migrations, rule
+changes, p95/max full decision time, solver status/gap, and fallback counts.
+Keep per-epoch placement and paths for independent physical/accounting checks.
+Verify all 15 baseline episodes against the original Mixed study, and verify
+that VM-only equals ECMP at the 64-VM packing boundary. Preserve all prior
+experiment sources and results. Each new run has immutable source hashes.
+

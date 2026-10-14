@@ -1,0 +1,94 @@
+{
+ "granularities": {
+  "exact": {
+   "expansion": 1,
+   "technique": "TabTree",
+   "construction_ms": 0.048,
+   "classification_s": 9.1e-05,
+   "avg_queries": 1.0,
+   "native_bytes": 672.0,
+   "native_bytes_per_rule": 16.8,
+   "mask_entries": 40,
+   "mask_bytes": 1464.0,
+   "mask_bytes_per_rule": 36.6,
+   "rules": 40,
+   "measured": true
+  },
+  "prefix": {
+   "expansion": 1,
+   "technique": "TabTree",
+   "construction_ms": 0.04125,
+   "classification_s": 8.9e-05,
+   "avg_queries": 1.0,
+   "native_bytes": 672.0,
+   "native_bytes_per_rule": 16.8,
+   "mask_entries": 40,
+   "mask_bytes": 1464.0,
+   "mask_bytes_per_rule": 36.6,
+   "rules": 40,
+   "measured": true
+  },
+  "range": {
+   "expansion": 82,
+   "technique": "TabTree",
+   "construction_ms": 0.048083,
+   "classification_s": 9.1e-05,
+   "avg_queries": 1.0,
+   "native_bytes": 672.0,
+   "native_bytes_per_rule": 16.8,
+   "mask_entries": 3267,
+   "mask_bytes": 118441.0,
+   "mask_bytes_per_rule": 2961.025,
+   "rules": 40,
+   "measured": true
+  }
+ },
+ "memory_profile_bytes_per_rule": {
+  "PartitionSort": {
+   "exact": 56.1,
+   "prefix": 55.65,
+   "range": 56.1
+  },
+  "PriorityTuple": {
+   "exact": 36.6,
+   "prefix": 36.6,
+   "range": 36.6
+  },
+  "TupleMerge": {
+   "exact": 24.7,
+   "prefix": 24.7,
+   "range": 24.7
+  },
+  "HyperSplit": {
+   "exact": 20.4,
+   "prefix": 20.4,
+   "range": 20.4
+  },
+  "HyperCuts": {
+   "exact": 853.6,
+   "prefix": 853.6,
+   "range": 853.6
+  },
+  "CutSplit": {
+   "exact": 12.5,
+   "prefix": 12.5,
+   "range": 12.5
+  },
+  "ByteCuts": {
+   "exact": 27.4,
+   "prefix": 24.4,
+   "range": 24.4
+  },
+  "TabTree": {
+   "exact": 16.8,
+   "prefix": 16.8,
+   "range": 16.8
+  },
+  "NPTree": {
+   "exact": 154.4,
+   "prefix": 296.4,
+   "range": 329.8
+  }
+ },
+ "rules_per_benchmark": 40
+}
